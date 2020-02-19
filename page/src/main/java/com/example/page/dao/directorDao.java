@@ -1,6 +1,7 @@
 package com.example.page.dao;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -8,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
 import com.example.page.domain.director;
+import com.example.page.dto.response.ResGetDirector;
 
 @Repository
 public class directorDao implements Serializable {
@@ -32,6 +34,9 @@ public class directorDao implements Serializable {
 	public director getById(Long id) {
 		return entityManager.find(director.class,id);
 	}
+	@SuppressWarnings("unchecked")
+	public List<director> getAllDirector() {
+			return (List<director>) entityManager.createQuery("from director").getResultList();
+	}
 
 }
-

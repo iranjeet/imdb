@@ -1,6 +1,7 @@
 package com.example.page.services;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 import com.example.page.dao.AssnActorMovieDao;
 import com.example.page.dao.GenresDao;
 import com.example.page.dao.MovieDao;
-
 import com.example.page.dao.ReviewDao;
 import com.example.page.dao.actorDao;
 import com.example.page.dao.directorDao;
@@ -32,10 +32,16 @@ import com.example.page.dto.request.ReqAddMovie;
 import com.example.page.dto.request.ReqAddProduction;
 import com.example.page.dto.request.ReqAddReview;
 import com.example.page.dto.request.ReqGetActor;
-import com.example.page.dto.request.ReqGetAllActor;
 import com.example.page.dto.request.ReqGetDirector;
 import com.example.page.dto.response.ResGetActor;
 import com.example.page.dto.response.ResGetAllActor;
+import com.example.page.dto.response.ResGetAllActor.ResGetAllAct;
+import com.example.page.dto.response.ResGetAllDirector;
+import com.example.page.dto.response.ResGetAllDirector.ResGetAllDir;
+import com.example.page.dto.response.ResGetAllGeneres;
+import com.example.page.dto.response.ResGetAllGeneres.ResGetAllGen;
+import com.example.page.dto.response.ResGetAllProduction;
+import com.example.page.dto.response.ResGetAllProduction.ResGetAllProd;
 import com.example.page.dto.response.ResGetDirector;
 import com.example.page.dto.response.ResGetProduction;
 
@@ -76,7 +82,7 @@ public class MovieServices {
 		genericResponse.setApiMessage("SUCCESS");
 		return genericResponse;
 	}
-	
+
 	// *************************ADD Director*************************
 
 	public GenericResponse addDirector(ReqAddDirector reqAddDirector) {
@@ -105,7 +111,6 @@ public class MovieServices {
 		genericResponse.setApiMessage("SUCCESS");
 		return genericResponse;
 	}
-
 
 	// ******************************Add Generes******************
 
@@ -147,13 +152,68 @@ public class MovieServices {
 		resGetActor.setName(ActorDb.getName());
 		return resGetActor;
 	}
-	
-//******************************get All Actor************************
-	public List<ResGetActor> getAllActor() {
-		ResGetAllActor resGetAllActor=new ResGetAllActor();
-		return aDao.getAllActor();
-		  
-	}	
+
+	// ******************************get All Actor************************
+	public ResGetAllActor getAllActor() {
+		ResGetAllActor resGetAllActor = new ResGetAllActor();
+		List<actor> actors = aDao.getAllActor();
+		List<ResGetAllAct> actorList = new ArrayList<>();
+		for (actor act : actors) {
+			ResGetAllActor.ResGetAllAct act1 = new ResGetAllActor.ResGetAllAct();
+			act1.setId(act.getId());
+			act1.setName(act.getName());
+			actorList.add(act1);
+		}
+		resGetAllActor.setActors(actorList);
+		return resGetAllActor;
+
+	}
+//	*******************************Get All Generes********************************
+	public ResGetAllGeneres getAllGeneres() {
+		ResGetAllGeneres resGetAllGeneres=new ResGetAllGeneres();
+		List<Genres> generes=gDao.getAllGeneres();
+		List<ResGetAllGen> genresList=new ArrayList<ResGetAllGeneres.ResGetAllGen>();
+		for(Genres gen: generes) {
+			ResGetAllGeneres.ResGetAllGen gen2=new ResGetAllGen();
+			gen2.setId(gen.getId());
+			gen2.setName(gen.getName());
+			genresList.add(gen2);			
+		}
+		resGetAllGeneres.setGeneres(genresList);
+		return resGetAllGeneres;
+	}
+
+
+	// ******************************Get All Director************************
+	public ResGetAllDirector getAllDirector() {
+		ResGetAllDirector resGetAllDirector = new ResGetAllDirector();
+		List<director> directors = dirDao.getAllDirector();
+		List<ResGetAllDir> directorList = new ArrayList<>();
+		for (director dir : directors) {
+			ResGetAllDirector.ResGetAllDir direDir = new ResGetAllDirector.ResGetAllDir();
+			direDir.setId(dir.getId());
+			direDir.setName(dir.getName());
+			directorList.add(direDir);
+		}
+		resGetAllDirector.setDirectors(directorList);
+		return resGetAllDirector;
+	}
+	// *******************************Get All Production***********************
+
+	public ResGetAllProduction getAllProduction() {
+		ResGetAllProduction resGetAllProduction = new ResGetAllProduction();
+		List<production> productions = pDao.getAllProduction();
+		List<ResGetAllProd> productionList = new ArrayList<>();
+		for (production prod : productions) {
+			ResGetAllProduction.ResGetAllProd productionHouse = new ResGetAllProduction.ResGetAllProd();
+			productionHouse.setId(prod.getId());
+			productionHouse.setName(prod.getName());
+			productionList.add(productionHouse);
+		}
+		resGetAllProduction.setProductions(productionList);
+		return resGetAllProduction;
+	}
+
 ////
 //	
 //	public List<ReqGetAllActor> getAllActor() {
@@ -166,42 +226,43 @@ public class MovieServices {
 //		}
 //		return null;
 //	}
-		// *************************ADD Movie*************************
+	// *************************ADD Movie*************************
 
-		public GenericResponse addMovie(ReqAddMovie reqAddMovie) {
+	public GenericResponse addMovie(ReqAddMovie reqAddMovie) {
 
-			GenericResponse genericResponse = new GenericResponse();
-			Timestamp currentTime = new Timestamp(new Date().getTime());
+		GenericResponse genericResponse = new GenericResponse();
+		Timestamp currentTime = new Timestamp(new Date().getTime());
 
-			Movie movie = new Movie();
-			movie.setName(reqAddMovie.getName());
-			movie.setCreatedDate(currentTime);
+		Movie movie = new Movie();
+		movie.setName(reqAddMovie.getName());
+		movie.setCreatedDate(currentTime);
+		movie.setReleaseDate(reqAddMovie.getReleaseDate());
 
-			director director = dirDao.getById(reqAddMovie.getDirectorId());
-			movie.setDir(director);
+		director director = dirDao.getById(reqAddMovie.getDirectorId());
+		movie.setDir(director);
 
-			production production = pDao.getById(reqAddMovie.getProductionId());
-			movie.setProduction(production);
+		production production = pDao.getById(reqAddMovie.getProductionId());
+		movie.setProduction(production);
 
-			Genres genre = gDao.getById(reqAddMovie.getGenreId());
-			movie.setGenres(genre);
+		Genres genre = gDao.getById(reqAddMovie.getGenreId());
+		movie.setGenres(genre);
 
-			movie.setLanguage(reqAddMovie.getLanguage());
-			mDao.create(movie);
+		movie.setLanguage(reqAddMovie.getLanguage());
+		mDao.create(movie);
 
-			for (Long actorId : reqAddMovie.getActorIds()) {
-				actor actor = aDao.getById(actorId);
-				AssnActorMovie actorMovie = new AssnActorMovie();
-				actorMovie.setActor(actor);
-				actorMovie.setMovie(movie);
-				assnActorMovieDao.create(actorMovie);
-			}
-			mDao.create(movie);
-
-			genericResponse.setApiSucessStatus(true);
-			genericResponse.setApiMessage("SUCCESS");
-			return genericResponse;
+		for (Long actorId : reqAddMovie.getActorIds()) {
+			actor actor = aDao.getById(actorId);
+			AssnActorMovie actorMovie = new AssnActorMovie();
+			actorMovie.setActor(actor);
+			actorMovie.setMovie(movie);
+			assnActorMovieDao.create(actorMovie);
 		}
+		mDao.create(movie);
+
+		genericResponse.setApiSucessStatus(true);
+		genericResponse.setApiMessage("SUCCESS");
+		return genericResponse;
+	}
 
 	// *************************Get Director*************************
 
@@ -213,25 +274,24 @@ public class MovieServices {
 		}
 		resGetDirector.setId(director.getId());
 		resGetDirector.setName(director.getName());
-		resGetDirector.setMovie(director.getMovies());
+//		resGetDirector.setMovie(director.getMovies());
 		return resGetDirector;
 	}
 
 //**********************Get Production*****************************
-	
+
 	public ResGetProduction getProduction(ReqGetDirector reqGetProduction) {
-		ResGetProduction resGetProduction=new ResGetProduction();
-		production production=pDao.getById(resGetProduction.getId());
-		if(production ==null) {
+		ResGetProduction resGetProduction = new ResGetProduction();
+		production production = pDao.getById(resGetProduction.getId());
+		if (production == null) {
 			return resGetProduction;
 		}
 		resGetProduction.setId(production.getId());
 		resGetProduction.setName(production.getName());
-						
+
 		return resGetProduction;
 	}
 
-	
 	public Movie getMovie(Movie movie) {
 		// TODO Auto-generated method stub
 		return mDao.getById(movie.getId());

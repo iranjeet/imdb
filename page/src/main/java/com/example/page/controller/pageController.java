@@ -9,10 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.page.domain.Movie;
-import com.example.page.domain.actor;
-import com.example.page.domain.director;
-import com.example.page.domain.production;
 import com.example.page.dto.generic.GenericResponse;
 import com.example.page.dto.request.ReqAddActor;
 import com.example.page.dto.request.ReqAddDirector;
@@ -26,6 +22,9 @@ import com.example.page.dto.request.ReqGetDirector;
 import com.example.page.dto.request.ReqGetProduction;
 import com.example.page.dto.response.ResGetActor;
 import com.example.page.dto.response.ResGetAllActor;
+import com.example.page.dto.response.ResGetAllDirector;
+import com.example.page.dto.response.ResGetAllGeneres;
+import com.example.page.dto.response.ResGetAllProduction;
 import com.example.page.dto.response.ResGetDirector;
 import com.example.page.dto.response.ResGetProduction;
 import com.example.page.services.MovieServices;
@@ -37,7 +36,7 @@ public class pageController {
 	@Autowired
 	private MovieServices movieServices;
 //------------------------------------Add ----------------------------------
-	
+
 	@PostMapping("/add/actor")
 	public GenericResponse addActor(@RequestBody ReqAddActor reqAddActor) {
 		GenericResponse genericResponse = movieServices.addActor(reqAddActor);
@@ -46,8 +45,8 @@ public class pageController {
 
 	@PostMapping("/add/director")
 	public GenericResponse addDirector(@RequestBody ReqAddDirector reqAddDirector) {
-	
-		GenericResponse genericResponse=movieServices.addDirector(reqAddDirector);
+
+		GenericResponse genericResponse = movieServices.addDirector(reqAddDirector);
 		return genericResponse;
 	}
 
@@ -56,24 +55,24 @@ public class pageController {
 		GenericResponse resGenericResponse = movieServices.addMovie(reqAddMovie);
 		return resGenericResponse;
 	}
-	
+
 	@PostMapping("/add/generes")
-	public GenericResponse addGenere(@RequestBody ReqAddGeneres reqAddGeneres ) {
-		GenericResponse genericResponse=movieServices.addGeneres(reqAddGeneres);
+	public GenericResponse addGenere(@RequestBody ReqAddGeneres reqAddGeneres) {
+		GenericResponse genericResponse = movieServices.addGeneres(reqAddGeneres);
 		return genericResponse;
-		
+
 	}
-	
+
 	@PostMapping("add/production")
-	public GenericResponse addProduction(@RequestBody ReqAddProduction reqAddProduction){
-		GenericResponse resGenericResponse=movieServices.addProduction(reqAddProduction);
+	public GenericResponse addProduction(@RequestBody ReqAddProduction reqAddProduction) {
+		GenericResponse resGenericResponse = movieServices.addProduction(reqAddProduction);
 		return resGenericResponse;
-		
+
 	}
-	
+
 	@PostMapping("add/review")
 	public GenericResponse addReview(@RequestBody ReqAddReview reqAddReview) {
-		GenericResponse resGenericResponse=movieServices.addReview(reqAddReview);
+		GenericResponse resGenericResponse = movieServices.addReview(reqAddReview);
 		return resGenericResponse;
 	}
 //	----------------------------------Get-------------------------------
@@ -83,24 +82,40 @@ public class pageController {
 		ResGetActor resGetActor = movieServices.getActor(reqGetActor);
 		return resGetActor;
 	}
-	@PostMapping("/get/allActor")
-	public List<ResGetActor> getAllActor( ) {
+
+	@GetMapping("/get/allActor")
+	public ResGetAllActor getAllActor() {
 		return movieServices.getAllActor();
-		
+
+	}
+
+	@GetMapping("/get/allDirector")
+	public ResGetAllDirector getAllDirector() {
+
+		return movieServices.getAllDirector();
+	}
+	
+	@GetMapping("/get/allGeneres")
+	public ResGetAllGeneres getAllGeneres() {
+		return movieServices.getAllGeneres();
 	}
 
 	@PostMapping("/get/director")
-	public ResGetDirector getDirector(@RequestBody ReqGetDirector reqGetDirector ) {
-		ResGetDirector resGetDirector=movieServices.getDirector(reqGetDirector);
+	public ResGetDirector getDirector(@RequestBody ReqGetDirector reqGetDirector) {
+		ResGetDirector resGetDirector = movieServices.getDirector(reqGetDirector);
 		return resGetDirector;
 	}
-	
+
 	@PostMapping("/get/production")
 	public ResGetProduction getProduction(@RequestBody ReqGetDirector reqGetProduction) {
-		ResGetProduction resGetProduction=movieServices.getProduction(reqGetProduction);
+		ResGetProduction resGetProduction = movieServices.getProduction(reqGetProduction);
 		return resGetProduction;
-		
-		
+
+	}
+
+	@GetMapping("/get/allProduction")
+	public ResGetAllProduction getAllProduction() {
+		return movieServices.getAllProduction();
 	}
 
 //	@GetMapping("/get/movie")

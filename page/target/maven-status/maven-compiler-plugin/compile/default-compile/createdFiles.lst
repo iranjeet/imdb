@@ -3,8 +3,8 @@ com/example/page/dto/request/ReqGetDirector.class
 com/example/page/domain/Genres.class
 com/example/page/dto/request/ReqAddReview.class
 com/example/page/dto/request/ReqGetAllActor.class
-com/example/page/domain/Review.class
 com/example/page/dao/productionDao.class
+com/example/page/domain/Review.class
 com/example/page/dao/directorDao.class
 com/example/page/config/ApplicationDbConfig.class
 com/example/page/domain/director.class

@@ -4,7 +4,7 @@
       "name": "applicationdb",
       "type": "javax.sql.DataSource",
       "sourceType": "com.example.page.config.ApplicationDbConfig",
-      "sourceMethod": "applicationDataSource()"
+      "sourceMethod": "public javax.sql.DataSource applicationDataSource() "
     }
   ],
   "properties": [],

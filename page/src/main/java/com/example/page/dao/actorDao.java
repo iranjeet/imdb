@@ -36,8 +36,8 @@ public class actorDao implements Serializable {
 	}
 	
 	
-	public List<ResGetActor> getAllActor(){
-		return (List<ResGetActor>) entityManager.createQuery("from actor").getResultList();
+	public List<actor> getAllActor(){
+		return (List<actor>) entityManager.createQuery("from actor").getResultList();
 	}
 
 }

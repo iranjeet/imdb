@@ -8,13 +8,8 @@ import com.example.page.domain.Movie;
 public class ResGetDirector {
 	private long id;
 	private String name;
-	private List<Movie> movie;
-	public List<Movie> getMovie() {
-		return movie;
-	}
-	public void setMovie(Set<Movie> set) {
-		this.movie = (List<Movie>) set;
-	}
+	private List<GetMovies> movies;
+	
 	public long getId() {
 		return id;
 	}
@@ -29,5 +24,34 @@ public class ResGetDirector {
 	}
 	
 	
+	public List<GetMovies> getMovies() {
+		return movies;
+	}
+	public void setMovies(List<GetMovies> movies) {
+		this.movies = movies;
+	}
 
+
+	public static class GetMovies {
+		
+		private Long id;
+		
+		private String movieName;
+
+		public Long getId() {
+			return id;
+		}
+
+		public void setId(Long id) {
+			this.id = id;
+		}
+
+		public String getMovieName() {
+			return movieName;
+		}
+
+		public void setMovieName(String movieName) {
+			this.movieName = movieName;
+		}
+	}
 }

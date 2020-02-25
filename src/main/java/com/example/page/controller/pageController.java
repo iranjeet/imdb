@@ -1,6 +1,7 @@
 package com.example.page.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,8 +41,11 @@ import com.example.page.dto.response.ResGetProduction;
 import com.example.page.services.MovieServices;
 
 @RestController
+@CrossOrigin(origins="http://192.168.0.173:8090/")
 @RequestMapping("/api")
 public class pageController {
+	
+	
 
 	@Autowired
 	private MovieServices movieServices;
@@ -118,10 +122,15 @@ public class pageController {
 		return resGetLanguage;
 		
 	}
+//	@PostMapping("/get/review")
+//	public 
+	
+	
 	@GetMapping("/get/allLanguage")
 	public ResGetAllLanguage getAllLanguage() {
 		return movieServices.getAllLanguage();
 	}
+
 	
 	@GetMapping("/get/allCountry")
 	public ResGetAllCountry getAllCountry() {

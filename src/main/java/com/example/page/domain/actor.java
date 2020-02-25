@@ -19,6 +19,8 @@ public class actor {
 	@Column(name = "name")
 	private String name;
 	
+	
+	
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "genres", cascade = CascadeType.ALL)
 	private Set<Movie> movies;
     

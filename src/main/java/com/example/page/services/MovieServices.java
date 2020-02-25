@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.page.dao.AssnActorMovieDao;
+import com.example.page.domain.AssnMovieReview;
 import com.example.page.dao.CountryDao;
 import com.example.page.dao.GenresDao;
 import com.example.page.dao.LanguageDao;
@@ -287,21 +288,6 @@ public class MovieServices {
 		return resGetAllGeneres;
 	}
 
-//***************************************Get All Movies*************************
-	public ResGetAllMovies getAllMovies() {
-		ResGetAllMovies resGetAllMovies = new ResGetAllMovies();
-		List<Movie> movies = mDao.getAllMovies();
-		List<ResGetAllMov> movieList = new ArrayList<ResGetAllMov>();
-		for (Movie mov : movies) {
-			ResGetAllMovies.ResGetAllMov mov2 = new ResGetAllMov();
-			mov2.setId(mov.getId());
-			mov2.setName(mov.getName());
-			mov2.setReleaseDate(mov.getReleaseDate());
-			movieList.add(mov2);
-		}
-		resGetAllMovies.setMovies(movieList);
-		return resGetAllMovies;
-	}
 	// *************************ADD Director*************************
 
 	public GenericResponse addDirector(ReqAddDirector reqAddDirector) {
@@ -333,11 +319,30 @@ public class MovieServices {
 		return resGetAllDirector;
 	}
 
+	//***************************************Get All Movies*************************
+		public ResGetAllMovies getAllMovies() {
+			ResGetAllMovies resGetAllMovies = new ResGetAllMovies();
+			List<Movie> movies = mDao.getAllMovies();
+			List<ResGetAllMov> movieList = new ArrayList<ResGetAllMov>();
+			for (Movie mov : movies) {
+				ResGetAllMovies.ResGetAllMov mov2 = new ResGetAllMov();				
+				mov2.setId(mov.getId());
+				mov2.setName(mov.getName());
+				mov2.setReleaseDate(mov.getReleaseDate());
+				mov2.setLanguage(mov.getLanguage());
+				movieList.add(mov2);
+				
+			}
+			
+			resGetAllMovies.setMovies(movieList);
+			return resGetAllMovies;
+		}
 	// *************************Get Movie Details****************************
 
 	public ResGetMovies getMovie(ReqGetMovie reqGetMovie) {
 		ResGetMovies resGetMovies = new ResGetMovies();
 		List<ResGetMovies.GetActor> actorList = new ArrayList<ResGetMovies.GetActor>();
+		List<ResGetMovies.GetReview> reviewList = new ArrayList<ResGetMovies.GetReview>();
 		Movie movie = mDao.getById(reqGetMovie.getId());
 		// actor actor=aDao.getById(ResGetMovies.GetActor.)
 		if (movie == null) {
@@ -350,6 +355,7 @@ public class MovieServices {
 		GetGenres genres = new GetGenres();
 		genres.setId(movie.getGenres().getId());
 		genres.setName(movie.getGenres().getName());
+
 		Set<AssnActorMovie> actorSet = movie.getActorMovies();
 		for (AssnActorMovie actorMovie : actorSet) {
 			ResGetMovies.GetActor actor = new ResGetMovies.GetActor();
@@ -359,6 +365,15 @@ public class MovieServices {
 		}
 		resGetMovies.setActors(actorList);
 		resGetMovies.setGenres(genres);
+		Set<AssnMovieReview> reviewSet = movie.getReviewMovie();
+		for (AssnMovieReview mReview : reviewSet) {
+			ResGetMovies.GetReview rev = new ResGetMovies.GetReview();
+			rev.setId(mReview.getReview().getId());
+			rev.setReview(mReview.getReview().getReview());
+			rev.setStars(mReview.getReview().getStars());
+			reviewList.add(rev);
+		}
+		resGetMovies.setReviews(reviewList);
 		return resGetMovies;
 	}
 	//***************************************************************************************
@@ -439,6 +454,7 @@ public class MovieServices {
 		resGetAllProduction.setProductions(productionList);
 		return resGetAllProduction;
 	}
+	
 	//*********************************Get All Language***************************
 
 	public ResGetAllLanguage getAllLanguage() {
@@ -454,8 +470,10 @@ public class MovieServices {
 		resGetAllLanguage.setGetAllLanguage(languageList);
 		return resGetAllLanguage;
 	}
+	
 	//*******************************Get AllCountry**************************
-	public ResGetAllCountry getAllCountry() {
+	
+public ResGetAllCountry getAllCountry() {
 		ResGetAllCountry resGetAllCountry=new ResGetAllCountry();
 		List<Country> countrys=cDao.getAllCountry();
 		List<ResGetAllCount> countryList=new ArrayList<ResGetAllCountry.ResGetAllCount>();
@@ -519,7 +537,8 @@ public class MovieServices {
 		return genericResponse;
 	}
 
-//	**************************Get Genres************************
+	//	**************************Get Genres************************
+	
 	public ResGetGeneres getGeneres(ReqGetGeneres reqGetGeneres) {
 		ResGetGeneres resGetGeneres = new ResGetGeneres();
 		Genres genres = gDao.getById(reqGetGeneres.getId());
@@ -531,6 +550,7 @@ public class MovieServices {
 
 		return resGetGeneres;
 	}
+	
 	// ******************************Add Generes******************
 
 	public GenericResponse addGeneres(ReqAddGeneres reqAddGeneres) {
@@ -547,6 +567,7 @@ public class MovieServices {
 	}
 
 	// ********************************update Generes**********************
+	
 	public GenericResponse updateGeneric(Long id, String name) {
 		GenericResponse genericResponse = new GenericResponse();
 		Genres genres = gDao.getById(id);

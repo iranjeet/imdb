@@ -9,6 +9,17 @@ public class ResGetMovies {
 	private String language;
 
 	private List<GetActor> actors;// SubClass
+	private List<GetReview> reviews;//SubClass
+	
+	public List<GetReview> getReviews() {
+		return reviews;
+	}
+
+	public void setReviews(List<GetReview> reviews) {
+		this.reviews = reviews;
+	}
+
+
 	private GetGenres genres;// SubClass
 
 	public Long getId() {
@@ -59,7 +70,7 @@ public class ResGetMovies {
 		this.genres = genres;
 	}
 
-	public static class GetActor {
+	public static class GetActor {//get all actors
 		private Long id;
 		private String name;
 
@@ -80,8 +91,34 @@ public class ResGetMovies {
 		}
 
 	}
+	
+	public static class GetReview{//get review
+		private Long id;
+		private int stars;
+		private String review;
+		public Long getId() {
+			return id;
+		}
+		public void setId(Long id) {
+			this.id = id;
+		}
+		public int getStars() {
+			return stars;
+		}
+		public void setStars(int stars) {
+			this.stars = stars;
+		}
+		public String getReview() {
+			return review;
+		}
+		public void setReview(String review) {
+			this.review = review;
+		}
+		
+	}
+	
 
-	public static class GetGenres {
+	public static class GetGenres {//Get all genrrics
 		private Long id;
 		private String name;
 

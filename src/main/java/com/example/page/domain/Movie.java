@@ -7,6 +7,8 @@ import javax.persistence.*;
 
 import org.hibernate.annotations.GenericGenerator;
 
+import com.example.page.domain.AssnMovieReview;
+
 @Entity
 @Table(name = "movie")
 public class Movie {
@@ -24,7 +26,7 @@ public class Movie {
 
 	@Column(name = "created_date")
 	private Timestamp createdDate;
-	
+
 	@Column(name = "language")
 	private String language;
 
@@ -39,12 +41,20 @@ public class Movie {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "production_id")
 	private production production;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "movie", cascade = CascadeType.ALL)
 	private Set<AssnActorMovie> actorMovies;
-	
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "movie", cascade = CascadeType.ALL)
-	private Set<Review> reviews;
+	private Set<AssnMovieReview> reviewMovie;
+
+	public Set<AssnMovieReview> getReviewMovie() {
+		return reviewMovie;
+	}
+
+	public void setReviewMovie(Set<AssnMovieReview> reviewMovie) {
+		this.reviewMovie = reviewMovie;
+	}
 
 	public long getId() {
 		return id;
@@ -110,14 +120,6 @@ public class Movie {
 		this.actorMovies = actorMovies;
 	}
 
-	public Set<Review> getReviews() {
-		return reviews;
-	}
-
-	public void setReviews(Set<Review> reviews) {
-		this.reviews = reviews;
-	}
-
 	public production getProduction() {
 		return production;
 	}
@@ -126,6 +128,4 @@ public class Movie {
 		this.production = production;
 	}
 
-	
-	
 }

@@ -26,6 +26,17 @@ public class AssnActorMovie {
 	@ManyToOne
 	@JoinColumn(name = "movie_id")
 	private Movie movie;
+	
+	@JoinColumn(name="isActive")
+	private Boolean isActive;
+	
+	public Boolean getIsActive() {
+		return isActive;
+	}
+
+	public void setIsActive(Boolean isActive) {
+		this.isActive = isActive;
+	}
 
 	public long getId() {
 		return id;

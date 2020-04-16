@@ -172,7 +172,7 @@ public class MovieServices {
 	public ResGetAllActor getAllActor() {
 		ResGetAllActor resGetAllActor = new ResGetAllActor();
 		List<actor> actors = aDao.getAllActor();
-		List<ResGetAllAct> actorList = new ArrayList<>();
+		List<ResGetAllAct> actorList = new ArrayList<>();	
 		for (actor act : actors) {
 			ResGetAllActor.ResGetAllAct act1 = new ResGetAllActor.ResGetAllAct();
 			act1.setId(act.getId());

@@ -12,25 +12,30 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
+
 @SpringBootApplication
 @EnableTransactionManagement
 @EnableAutoConfiguration
 @ComponentScan
+@EnableSwagger2
 public class PageApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(PageApplication.class, args);//Main Method
+		SpringApplication.run(PageApplication.class, args);
+		System.out.println("@imdb-started");
+
 	}
+
 	@SuppressWarnings("deprecation")
 	@Bean
-    public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurerAdapter() {
-            @Override
-            public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/**").allowedOrigins("*");
-            }
-        };
-    }
-
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurerAdapter() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**").allowedOrigins("*");
+			}
+		};
+	}
 
 }

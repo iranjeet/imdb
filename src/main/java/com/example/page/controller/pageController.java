@@ -41,16 +41,22 @@ import com.example.page.dto.response.ResGetProduction;
 import com.example.page.services.MovieServices;
 
 @RestController
-@CrossOrigin(origins="http://192.168.0.173:8090/")
-@RequestMapping("/api")
+@CrossOrigin(origins = "http://192.168.1.4:8090/")//(origin="http : // ipAddress : portNo")
+@RequestMapping("/imdb")
 public class pageController {
-	
-	
 
 	@Autowired
 	private MovieServices movieServices;
-//------------------------------------Add Data----------------------------------
 
+	//-------------------------Api's Check--------------------
+	
+	@GetMapping("/check")
+	public String Check() {
+		return "Api's Are Working ";
+	}
+	
+	//------------------------------------Add Data----------------------------------
+	
 	@PostMapping("/add/actor")
 	public GenericResponse addActor(@RequestBody ReqAddActor reqAddActor) {
 		GenericResponse genericResponse = movieServices.addActor(reqAddActor);
@@ -89,17 +95,17 @@ public class pageController {
 		GenericResponse resGenericResponse = movieServices.addReview(reqAddReview);
 		return resGenericResponse;
 	}
-	
+
 	@PostMapping("/add/country")
 	public GenericResponse addCountry(@RequestBody ReqAddCountry reqAddCountry) {
-		GenericResponse genericResponse=movieServices.addCountry(reqAddCountry);
+		GenericResponse genericResponse = movieServices.addCountry(reqAddCountry);
 		return genericResponse;
-		
+
 	}
-	
+
 	@PostMapping("/add/language")
 	public GenericResponse addLanguage(@RequestBody ReqAddLanguage reqAddLanguage) {
-		GenericResponse genericResponse=movieServices.addCountry(reqAddLanguage);
+		GenericResponse genericResponse = movieServices.addCountry(reqAddLanguage);
 		return genericResponse;
 	}
 //------------------------------------Get-----------------------------------------------------------
@@ -116,22 +122,21 @@ public class pageController {
 		return movieServices.getAllActor();
 
 	}
+
 	@PostMapping("/get/language")
 	public ResGetLanguage getLanguage(@RequestBody ReqGetLanguage reqLanguage) {
-		ResGetLanguage resGetLanguage=movieServices.getlanguage(reqLanguage);
+		ResGetLanguage resGetLanguage = movieServices.getlanguage(reqLanguage);
 		return resGetLanguage;
-		
+
 	}
 //	@PostMapping("/get/review")
 //	public 
-	
-	
+
 	@GetMapping("/get/allLanguage")
 	public ResGetAllLanguage getAllLanguage() {
 		return movieServices.getAllLanguage();
 	}
 
-	
 	@GetMapping("/get/allCountry")
 	public ResGetAllCountry getAllCountry() {
 		return movieServices.getAllCountry();

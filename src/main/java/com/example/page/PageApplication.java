@@ -23,10 +23,10 @@ public class PageApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PageApplication.class, args);
-		System.out.println("@imdb-started");
+		System.out.println("/n/n/n @imdb-started");
 
 	}
-
+//Cross Origin user purpos CORS
 	@SuppressWarnings("deprecation")
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
@@ -36,6 +36,7 @@ public class PageApplication {
 				registry.addMapping("/**").allowedOrigins("*");
 			}
 		};
+		
 	}
 
 }

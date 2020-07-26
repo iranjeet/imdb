@@ -26,7 +26,7 @@ public class PageApplication {
 		System.out.println("/n/n/n @imdb-started");
 
 	}
-//Cross Origin user purpos CORS
+
 	@SuppressWarnings("deprecation")
 	@Bean
 	public WebMvcConfigurer corsConfigurer() {
